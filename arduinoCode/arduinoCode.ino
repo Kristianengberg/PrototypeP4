@@ -6,64 +6,68 @@ class Card
   bool isInside = false;
   char *pinInChar;
   int *pins;
+  int amountOfPins;
  
     Card(int howManyPins)
   {
     pins = new int[howManyPins] ;
     pinInChar = new char[howManyPins];
+    this->amountOfPins = (int)howManyPins;
     
-    
-    for(int i = 0; i < sizeof(pins); i++)
+    for(int i = 0; i < howManyPins; i++)
     {
-      
+    pinMode(i+2, INPUT_PULLUP);
+    
     this->pins[i] = i+2;
     this->pinInChar[i] = '0' + pins[i];
-    pinMode(i+2, INPUT_PULLUP); 
- 
+     
+   
+    
     }
     
-    
   }
   
   
-  void isIn(int whatIsIn)
-  {
-    Serial.print(pinInChar[whatIsIn]);
-  }
+
 
   void checkStatus()
   {
-    for(int i = 0; i < sizeof(pins); i++)
+    for(int i = 0; i < amountOfPins; i++)
     {
     
     if(digitalRead(pins[i]) == 0)
     {
-      isIn(i);
+      Serial.write(pins[i]);
     }
+    else
+    {
+      Serial.write(0);
     }
-  checkStatus();
+    
+    }
+
     
   }
 
 };
 
 
+Card *cards;
 
-Card cards = Card(10);
 
 void setup() {
   // put your setup code here, to run once:
 
-
+int amountOfCards = 12;
   
 Serial.begin(9600);
-
+cards = new Card(amountOfCards);
 
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-cards.checkStatus();
+cards->checkStatus();
 
 }
 
