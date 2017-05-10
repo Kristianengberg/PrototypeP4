@@ -1,4 +1,3 @@
-#include <stdlib.h>
 
 class Card
 {
@@ -6,20 +5,24 @@ class Card
     bool isInside = false;
     char *pinInChar;
     int *pins;
+    bool *beenPlayed;
     int amountOfPins;
 
     Card(int howManyPins)
     {
       pins = new int[howManyPins] ;
       pinInChar = new char[howManyPins];
+      beenPlayed = new bool[howManyPins];
       this->amountOfPins = (int)howManyPins;
+      
 
       for (int i = 0; i < howManyPins; i++)
       {
-        pinMode(i + 2, INPUT_PULLUP);
+        pinMode(i +2, INPUT_PULLUP);
 
-        this->pins[i] = i + 2;
+        this->pins[i] = i +2;
         this->pinInChar[i] = '0' + pins[i];
+        this->beenPlayed[i] = {false};
 
       }
 
@@ -30,15 +33,20 @@ class Card
       for (int i = 0; i < amountOfPins; i++)
       {
 
-        if (digitalRead(pins[i]) == 0)
+        if (digitalRead(pins[i]) == 1 && beenPlayed[i] == false)
         {
           Serial.write(pins[i]);
+          Serial.println(pins[i]);
+          beenPlayed[i] = true;
+          
           break;
         }
+        
 
       }
       Serial.write(0);
     }
+    
 
 };
 
@@ -49,10 +57,13 @@ Card *cards;
 void setup() {
   // put your setup code here, to run once:
 
-  int amountOfCards = 12;
+  int amountOfCards = 3;
 
   Serial.begin(9600);
+  
+  Serial.println("Setup Complete");
   cards = new Card(amountOfCards);
+  
 
 }
 
@@ -61,6 +72,7 @@ void loop() {
   cards->checkStatus();
 
 }
+
 
 
 
