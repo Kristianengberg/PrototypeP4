@@ -48,17 +48,23 @@ class Card
       }
       for (int i = 0; i < amountOfAPins; i++)
       {
-        if (analogRead(i) < 510 && analogBeenPlayed[i] == false)
+        if (analogRead(i) > 330 && analogRead(i) < 430 && analogBeenPlayed[i] == false)
         {
           Serial.println("This is analog read 1");
+          Serial.println(amountOfPins + i + 1);
+          analogBeenPlayed[i] = true;
         }
-        else if (analogRead(i) > 550 && analogBeenPlayed[i + 1] == false)
+        else if (analogRead(i) > 250 && analogRead(i) < 350 && analogBeenPlayed[i + 1] == false)
         {
           Serial.println("This is analog read 2");
+          Serial.println(amountOfPins + i + 1);
+          analogBeenPlayed[i+1] = true;
         }
-        else if (analogRead(i) > 0 && analogBeenPlayed[i + 2] == false)
+        else if (analogRead(i) > 1000 && analogBeenPlayed[i + 2] == false)
         {
           Serial.println("This is analog read 3");
+          Serial.println(amountOfPins + i + 1);
+          analogBeenPlayed[i+2] = true;
         }
       }
     }
@@ -69,8 +75,8 @@ Card *cards;
 void setup()
 {
   // put your setup code here, to run once:
-  int digitalCards = 11;
-  int analogCards = 4;
+  int digitalCards = 12;
+  int analogCards = 2;
 
   Serial.begin(9600);
 
@@ -83,6 +89,7 @@ void loop()
   // put your main code here, to run repeatedly:
   cards->checkStatus();
 }
+
 
 
 
