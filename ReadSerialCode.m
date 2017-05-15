@@ -1,4 +1,4 @@
-ds= serial('COM6');
+s= serial('COM5');
 f = gcf;
 i= 1;
 key = 0;
@@ -53,13 +53,13 @@ end
 if(inputdata == 10)
     sound(market,FsM);
 end
-if(inputdata == 13)
+if(inputdata == 11)
     sound(research,FsR);
 end
 if(inputdata == 12)
     sound(civilian,FsCi);
 end
-if(inputdata == 11)
+if(inputdata == 13)
     sound(camel,FsCa);
 end
 pause(.0001);
