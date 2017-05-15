@@ -1,4 +1,4 @@
-s= serial('COM6');
+ds= serial('COM6');
 f = gcf;
 i= 1;
 key = 0;

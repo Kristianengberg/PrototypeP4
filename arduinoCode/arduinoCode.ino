@@ -50,7 +50,7 @@ class Card
       }
       for (int i = 0; i < amountOfAPins; i++)
       {
-        if (analogRead(i) > 330 && analogRead(i) < 430 && analogBeenPlayed[i] == false)
+        if (analogRead(i) > 330 && analogRead(i) < 500 && analogBeenPlayed[i] == false)
         {
           //Serial.println("This is analog read 1");
           Serial.write(amountOfPins + i + 2);
@@ -64,7 +64,7 @@ class Card
           analogBeenPlayed[i+1] = true;
           noCard = false;
         }
-        else if (analogRead(i) > 1000 && analogBeenPlayed[i + 2] == false)
+        else if (analogRead(i) > 900 && analogBeenPlayed[i + 2] == false)
         {
           //Serial.println("This is analog read 3");
           Serial.write(amountOfPins + i + 2);
