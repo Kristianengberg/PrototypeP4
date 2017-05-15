@@ -37,36 +37,47 @@ class Card
 
     void checkStatus()
     {
+      bool noCard = true;
       for (int i = 0; i < amountOfPins; i++)
       {
         if (digitalRead(pins[i]) == 1 && beenPlayed[i] == false)
         {
           Serial.write(pins[i]);
-          Serial.println(pins[i]);
+         // Serial.println(pins[i]);
           beenPlayed[i] = true;
+          noCard = false;
         }
       }
       for (int i = 0; i < amountOfAPins; i++)
       {
         if (analogRead(i) > 330 && analogRead(i) < 430 && analogBeenPlayed[i] == false)
         {
-          Serial.println("This is analog read 1");
-          Serial.println(amountOfPins + i + 1);
+          //Serial.println("This is analog read 1");
+          Serial.write(amountOfPins + i + 2);
           analogBeenPlayed[i] = true;
+          noCard = false;
         }
-        else if (analogRead(i) > 250 && analogRead(i) < 350 && analogBeenPlayed[i + 1] == false)
+        else if ( analogRead(i) < 330 && analogBeenPlayed[i + 1] == false)
         {
-          Serial.println("This is analog read 2");
-          Serial.println(amountOfPins + i + 1);
+         // Serial.println("This is analog read 2");
+          Serial.write(amountOfPins + i + 2);
           analogBeenPlayed[i+1] = true;
+          noCard = false;
         }
         else if (analogRead(i) > 1000 && analogBeenPlayed[i + 2] == false)
         {
-          Serial.println("This is analog read 3");
-          Serial.println(amountOfPins + i + 1);
+          //Serial.println("This is analog read 3");
+          Serial.write(amountOfPins + i + 2);
           analogBeenPlayed[i+2] = true;
+          noCard = false;
         }
       }
+      if (noCard)
+{
+  Serial.write(0);
+  }
+
+      
     }
 };
 
@@ -80,7 +91,7 @@ void setup()
 
   Serial.begin(9600);
 
-  Serial.println("Setup Complete");
+  //Serial.println("Setup Complete");
   cards = new Card(digitalCards, analogCards);
 }
 
