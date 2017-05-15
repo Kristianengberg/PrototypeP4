@@ -75,8 +75,8 @@ Card *cards;
 void setup()
 {
   // put your setup code here, to run once:
-  int digitalCards = 12;
-  int analogCards = 2;
+  int digitalCards = 7;
+  int analogCards = 5;
 
   Serial.begin(9600);
 
